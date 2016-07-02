@@ -1,58 +1,60 @@
 //: Playground - noun: a place where people can play
 
-import UIKit
-
-var str = "Hello, playground"
 
 
-func sortArray(arrayOne: [Int], arrayTwo: [Int]) -> [Int] {
+var arr1 = [0,9,100,4000,23123,123,9]
+var arr2 = [5,0,90,44,3]
+var arr3 = arr1 + arr2
+var arr4 = Array(Set(arr3))
+
+func merge(leftArray leftArray: [Int], rightArray: [Int]) -> [Int] {
     
+    var leftIndex = 0
+    var rightIndex = 0
     
-    var arrayOneIndex = 0
-    var arrayTwoIndex = 0
-    var sortedArr:[Int] = []
+    var mergeArray = [Int]()
     
-    while arrayOneIndex < arrayOne.count && arrayTwoIndex < arrayTwo.count {
-        if arrayOne[arrayOneIndex] < arrayTwo[arrayTwoIndex]{
-            sortedArr.append(arrayOne[arrayOneIndex])
-            arrayOneIndex += 1
-        } else if arrayOne[arrayOneIndex] > arrayTwo[arrayTwoIndex]{
-            sortedArr.append(arrayTwo[arrayTwoIndex])
-            arrayTwoIndex += 1
+    while leftIndex < leftArray.count && rightIndex < rightArray.count {
+        if leftArray[leftIndex] < rightArray[rightIndex] {
+            mergeArray.append(leftArray[leftIndex])
+                        leftIndex += 1
+        } else if leftArray[leftIndex] > rightArray[rightIndex] {
+            mergeArray.append(rightArray[rightIndex])
+            rightIndex += 1
         } else {
-            sortedArr.append(arrayOne[arrayOneIndex])
-            arrayOneIndex += 1
-            sortedArr.append(arrayTwo[arrayTwoIndex])
-            arrayTwoIndex += 1
+            mergeArray.append(leftArray[leftIndex])
+            leftIndex += 1
+            mergeArray.append(rightArray[rightIndex])
+            rightIndex += 1
+            
         }
     }
-    while arrayOneIndex < arrayOne.count {
-        sortedArr.append(arrayOne[arrayOneIndex])
-        arrayOneIndex += 1
+    
+
+    while leftIndex < leftArray.count {
+        mergeArray.append(leftArray[leftIndex])
+        leftIndex += 1
     }
-    while arrayTwoIndex < arrayTwo.count {
-        sortedArr.append(arrayTwo[arrayTwoIndex])
-        arrayTwoIndex += 1
+    while rightIndex < rightArray.count {
+        mergeArray.append(rightArray[rightIndex])
+        rightIndex += 1
     }
     
-    return sortedArr
-}
-func mergeArr(array:[Int]) -> [Int] {
-    
-    guard array.count > 1 else {
-        return array
-    }
-    let arrMiddle = array.count / 2
-    let arrayOne = mergeArr(Array(array[0..<arrMiddle]))
-    let arrayTwo = mergeArr(Array(array[arrMiddle..<array.count]))
-    
-    return sortArray(arrayOne, arrayTwo: arrayTwo)
+    return mergeArray
 }
 
-sortArray([1,4,7,33,44], arrayTwo: [0,3,5,6])
+func sortArray(array: [Int]) -> [Int] {
 
+    guard array.count > 1 else { return array }
+        let middleIndex = array.count / 2
+    
+    let leftArray = sortArray(Array(array[0..<middleIndex]))
+    let rightArray = sortArray(Array(array[middleIndex..<array.count]))
+    
+    return merge(leftArray: leftArray, rightArray: rightArray)
+}
 
-
+sortArray(arr4)
 
 
 
